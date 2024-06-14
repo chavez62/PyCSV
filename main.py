@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
-from tkinter import ttk
+from ttkbootstrap import Style
+from ttkbootstrap import ttk
 import pyodbc
 import pandas as pd
 
@@ -10,6 +11,7 @@ class AccessToCSVApp:
         self.root.title("Access Database to CSV")
         self.root.geometry("600x400")
 
+        self.style = Style(theme="flatly")  # Apply a modern theme
         self.create_widgets()
 
     def create_widgets(self):
@@ -22,7 +24,7 @@ class AccessToCSVApp:
         self.entry_file_path = ttk.Entry(frame, width=50)
         self.entry_file_path.grid(row=0, column=1, pady=5, sticky=tk.EW)
 
-        button_browse = ttk.Button(frame, text="Browse...", command=self.select_file)
+        button_browse = ttk.Button(frame, text="Browse...", command=self.select_file, bootstyle="primary-outline")
         button_browse.grid(row=0, column=2, padx=5, pady=5)
 
         label_query = ttk.Label(frame, text="SQL Query:")
@@ -31,7 +33,7 @@ class AccessToCSVApp:
         self.text_query = tk.Text(frame, width=50, height=10)
         self.text_query.grid(row=1, column=1, columnspan=2, pady=5, sticky=tk.EW)
 
-        button_generate = ttk.Button(frame, text="Generate CSV", command=self.generate_csv)
+        button_generate = ttk.Button(frame, text="Generate CSV", command=self.generate_csv, bootstyle="success-outline")
         button_generate.grid(row=2, column=1, pady=10)
 
         self.status_label = ttk.Label(frame, text="", foreground="blue")
@@ -43,7 +45,7 @@ class AccessToCSVApp:
             widget.grid_configure(padx=5, pady=5)
 
         style = ttk.Style()
-        style.configure("TButton", padding=6, relief="flat", background="#ccc")
+        style.configure("TButton", padding=6, relief="flat")
         style.configure("TLabel", padding=6)
 
     def select_file(self):
