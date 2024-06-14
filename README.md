@@ -39,3 +39,7 @@ python access_to_csv.py
    + Enter your SQL query in the provided text area.
 3. Generate CSV:
    + Click the "Generate CSV" button to execute the query and save the results to a CSV file. You will be prompted to choose the save location.
+
+## Screenshot
+![image](https://github.com/chavez62/PyCSV/assets/67764701/c65f64ea-ddd1-4d44-b784-2075a164d4b3)
+
