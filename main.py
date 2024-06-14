@@ -34,6 +34,9 @@ class AccessToCSVApp:
         button_generate = ttk.Button(frame, text="Generate CSV", command=self.generate_csv)
         button_generate.grid(row=2, column=1, pady=10)
 
+        self.status_label = ttk.Label(frame, text="", foreground="blue")
+        self.status_label.grid(row=3, column=0, columnspan=3, pady=5)
+
         frame.columnconfigure(1, weight=1)
 
         for widget in frame.winfo_children():
@@ -59,6 +62,7 @@ class AccessToCSVApp:
             return
 
         try:
+            self.status_label.config(text="Processing...")
             conn_str = f'DRIVER={{Microsoft Access Driver (*.mdb, *.accdb)}};DBQ={file_path};'
             conn = pyodbc.connect(conn_str)
             data = pd.read_sql(query, conn)
@@ -69,13 +73,17 @@ class AccessToCSVApp:
             if save_path:
                 data.to_csv(save_path, index=False)
                 messagebox.showinfo("Success", f"CSV file has been saved to {save_path}")
+                self.status_label.config(text="CSV file saved successfully.")
 
         except pyodbc.Error as db_err:
             messagebox.showerror("Database Error", f"An error occurred with the database: {db_err}")
+            self.status_label.config(text="")
         except pd.io.sql.DatabaseError as sql_err:
             messagebox.showerror("SQL Error", f"An SQL error occurred: {sql_err}")
+            self.status_label.config(text="")
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred: {str(e)}")
+            self.status_label.config(text="")
 
 if __name__ == "__main__":
     root = tk.Tk()
